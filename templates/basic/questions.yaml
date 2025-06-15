@@ -1,0 +1,3 @@
+- name: ProjectName
+  prompt: "Project name"
+  default: "my-app"

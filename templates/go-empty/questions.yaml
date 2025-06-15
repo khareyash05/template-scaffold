@@ -1,0 +1,15 @@
+- name: ProjectName
+  prompt: "Project name"
+  default: "my-go-app"
+- name: ModuleName
+  prompt: "Go module name (e.g., github.com/username/project)"
+  default: "github.com/username/my-go-app"
+- name: UseGit
+  prompt: "Initialize git repository? (y/n)"
+  default: true
+- name: UseGoMod
+  prompt: "Initialize go.mod? (y/n)"
+  default: true
+- name: GoVersion
+  prompt: "Go version to use"
+  default: "1.21" 

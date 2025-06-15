@@ -1,6 +1,0 @@
-- name: ProjectName
-  prompt: "Project name"
-  default: "my-app"
-- name: UseDocker
-  prompt: "Include Dockerfile? (y/n)"
-  default: false

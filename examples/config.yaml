@@ -1,0 +1,3 @@
+variables:
+  ProjectName: my-awesome-app
+  UseDocker: true

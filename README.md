@@ -13,6 +13,34 @@ A modern, flexible project scaffolding tool that supports both interactive and n
 
 ## Installation
 
+### Using Go Install
+
+```bash
+go install github.com/khareyash05/template-scaffold@latest
+```
+
+### Using Homebrew (macOS/Linux)
+
+```bash
+brew install khareyash05/tap/template-scaffold
+```
+
+### Manual Installation
+
+1. Download the latest release for your platform from the [releases page](https://github.com/khareyash05/template-scaffold/releases)
+2. Extract the archive
+3. Move the binary to a directory in your PATH
+
+```bash
+# Example for Linux/macOS
+mv scaffold /usr/local/bin/
+
+# Example for Windows (PowerShell)
+Move-Item scaffold.exe C:\Windows\System32\
+```
+
+### From Source
+
 ```bash
 # Clone the repository
 git clone https://github.com/khareyash05/template-scaffold.git
@@ -23,7 +51,7 @@ cd template-scaffold
 # Build the project
 go build
 
-# Install globally (optional)
+# Install globally
 go install
 ```
 

@@ -1,51 +1,78 @@
 package renderer
 
 import (
-  "bytes"
-  "fmt"
-  "io/ioutil"
-  "os"
-  "path/filepath"
-  "text/template"
+	"bytes"
+	"fmt"
+	"os"
+	"path/filepath"
+	"text/template"
+
+	"github.com/khareyash05/scaffold-templates/pkg/diff"
 )
 
 // Render walks tplDir, applies vars to every file, writes into outDir.
 func Render(tplDir string, vars map[string]interface{}, outDir string) error {
-  return filepath.Walk(tplDir, func(path string, info os.FileInfo, err error) error {
-    if err != nil {
-      return err
-    }
-    rel, _ := filepath.Rel(tplDir, path)
-    outPath := filepath.Join(outDir, rel)
+	return filepath.Walk(tplDir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		rel, _ := filepath.Rel(tplDir, path)
+		outPath := filepath.Join(outDir, rel)
 
-    if info.IsDir() {
-      return os.MkdirAll(outPath, 0755)
-    }
+		if info.IsDir() {
+			return os.MkdirAll(outPath, 0755)
+		}
 
-    // read & parse
-    data, err := ioutil.ReadFile(path)
-    if err != nil {
-      return err
-    }
-    tmpl, err := template.New(rel).Parse(string(data))
-    if err != nil {
-      return fmt.Errorf("parsing %s: %w", rel, err)
-    }
+		// read & parse
+		data, err := os.ReadFile(path)
+		if err != nil {
+			return err
+		}
+		tmpl, err := template.New(rel).Parse(string(data))
+		if err != nil {
+			return fmt.Errorf("parsing %s: %w", rel, err)
+		}
 
-    // execute into buffer
-    var buf bytes.Buffer
-    if err := tmpl.Execute(&buf, vars); err != nil {
-      return fmt.Errorf("rendering %s: %w", rel, err)
-    }
+		// execute into buffer
+		var buf bytes.Buffer
+		if err := tmpl.Execute(&buf, vars); err != nil {
+			return fmt.Errorf("rendering %s: %w", rel, err)
+		}
 
-    // write
-    return ioutil.WriteFile(outPath, buf.Bytes(), info.Mode())
-  })
+		// write
+		return os.WriteFile(outPath, buf.Bytes(), info.Mode())
+	})
 }
 
-// DryRun can show file-by-file diffs if diffMode=true, otherwise just list.
 func DryRun(tplDir string, vars map[string]interface{}, outDir string, diffMode bool) error {
-  // TODO: implement using pkg/diff
-  fmt.Printf("Dry run: would scaffold %s into %s (diff: %v)\n", tplDir, outDir, diffMode)
-  return nil
+	return filepath.Walk(tplDir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if info.IsDir() {
+			return nil
+		}
+
+		rel, _ := filepath.Rel(tplDir, path)
+
+		// Render the template into newBuf
+		data, _ := os.ReadFile(path)
+		tmpl := template.Must(template.New(rel).Parse(string(data)))
+		var newBuf bytes.Buffer
+		_ = tmpl.Execute(&newBuf, vars)
+		newText := newBuf.String()
+
+		if diffMode {
+			// Try to read existing file (could be empty/nonexistent)
+			existingPath := filepath.Join(outDir, rel)
+			oldBytes, _ := os.ReadFile(existingPath)
+			oldText := string(oldBytes)
+
+			fmt.Println(diff.Unified(rel, oldText, newText))
+		} else {
+			fmt.Printf("[DRY-RUN] would write %s\n", rel)
+		}
+
+		return nil
+	})
 }

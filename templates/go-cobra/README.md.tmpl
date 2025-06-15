@@ -1,0 +1,52 @@
+# {{ .ProjectName }}
+
+A modern CLI application built with Cobra.
+
+## Features
+
+- Modern CLI interface using Cobra
+- Configuration management with Viper
+- Version command included
+- Configurable via config file or environment variables
+
+## Installation
+
+```bash
+go install {{ .ModuleName }}@latest
+```
+
+## Usage
+
+```bash
+# Show help
+{{ .ProjectName }} --help
+
+# Show version
+{{ .ProjectName }} version
+
+# Use config file
+{{ .ProjectName }} --config /path/to/config.yaml
+```
+
+## Development
+
+```bash
+# Clone the repository
+git clone {{ .ModuleName }}
+
+# Navigate to the project directory
+cd {{ .ProjectName }}
+
+# Install dependencies
+go mod download
+
+# Build the project
+go build
+
+# Run tests
+go test ./...
+```
+
+## License
+
+{{ .License }} © {{ .Author }} 

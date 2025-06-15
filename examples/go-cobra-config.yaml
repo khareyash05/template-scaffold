@@ -1,0 +1,8 @@
+variables:
+  ProjectName: my-cli
+  ModuleName: github.com/username/my-cli
+  UseGit: true
+  UseGoMod: true
+  GoVersion: 1.24
+  Author: John Doe
+  License: MIT 

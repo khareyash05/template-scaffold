@@ -1,0 +1,18 @@
+- name: ProjectName
+  prompt: "Project name"
+  default: "my-cli"
+- name: ModuleName
+  prompt: "Go module name (e.g., github.com/username/project)"
+  default: "github.com/username/my-cli"
+- name: UseGit
+  prompt: "Initialize git repository? (y/n)"
+  default: true
+- name: GoVersion
+  prompt: "Go version to use"
+  default: "1.21"
+- name: Author
+  prompt: "Author name"
+  default: "Your Name"
+- name: License
+  prompt: "License (MIT/Apache-2.0/GPL-3.0)"
+  default: "MIT" 

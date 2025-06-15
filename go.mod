@@ -1,4 +1,4 @@
-module github.com/khareyash05/scaffold-templates
+module github.com/khareyash05/template-scaffold
 
 go 1.24.3
 

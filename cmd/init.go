@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/khareyash05/scaffold-templates/pkg/prompt"
-	"github.com/khareyash05/scaffold-templates/pkg/registry"
-	"github.com/khareyash05/scaffold-templates/pkg/renderer"
+	"github.com/khareyash05/template-scaffold/pkg/prompt"
+	"github.com/khareyash05/template-scaffold/pkg/registry"
+	"github.com/khareyash05/template-scaffold/pkg/renderer"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
 )

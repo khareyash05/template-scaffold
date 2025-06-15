@@ -8,7 +8,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/khareyash05/scaffold-templates/pkg/diff"
+	"github.com/khareyash05/template-scaffold/pkg/diff"
 )
 
 // Render walks tplDir, applies vars to every file, writes into outDir.

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"text/template"
 
 	"github.com/khareyash05/scaffold-templates/pkg/diff"
@@ -39,6 +40,11 @@ func Render(tplDir string, vars map[string]interface{}, outDir string) error {
 			return fmt.Errorf("rendering %s: %w", rel, err)
 		}
 
+		// strip .tmpl extension if present
+		if strings.HasSuffix(outPath, ".tmpl") {
+			outPath = strings.TrimSuffix(outPath, ".tmpl")
+		}
+
 		// write
 		return os.WriteFile(outPath, buf.Bytes(), info.Mode())
 	})
@@ -62,15 +68,21 @@ func DryRun(tplDir string, vars map[string]interface{}, outDir string, diffMode 
 		_ = tmpl.Execute(&newBuf, vars)
 		newText := newBuf.String()
 
+		// strip .tmpl extension if present
+		outRel := rel
+		if strings.HasSuffix(outRel, ".tmpl") {
+			outRel = strings.TrimSuffix(outRel, ".tmpl")
+		}
+
 		if diffMode {
 			// Try to read existing file (could be empty/nonexistent)
-			existingPath := filepath.Join(outDir, rel)
+			existingPath := filepath.Join(outDir, outRel)
 			oldBytes, _ := os.ReadFile(existingPath)
 			oldText := string(oldBytes)
 
-			fmt.Println(diff.Unified(rel, oldText, newText))
+			fmt.Println(diff.Unified(outRel, oldText, newText))
 		} else {
-			fmt.Printf("[DRY-RUN] would write %s\n", rel)
+			fmt.Printf("[DRY-RUN] would write %s\n", outRel)
 		}
 
 		return nil

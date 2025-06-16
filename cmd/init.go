@@ -41,7 +41,7 @@ variables:
 		RunE: runInit,
 	}
 
-	initCmd.Flags().StringVarP(&tplSource, "source", "s", "./templates", "template source (path or repo@version)")
+	initCmd.Flags().StringVarP(&tplSource, "source", "s", "github.com/khareyash05/template-scaffold/templates", "template source (path or repo@version)")
 	initCmd.Flags().StringVarP(&outputDir, "output", "o", ".", "where to generate files")
 	initCmd.Flags().BoolVar(&dryRun, "dry-run", false, "do not write files")
 	initCmd.Flags().BoolVar(&diffMode, "diff", false, "show diff in dry-run")
